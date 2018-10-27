@@ -7,7 +7,7 @@ export default class RouteArticles extends Route {
   constructor(params) {
     super({ ...params });
   }
-
+/*
   // get route: http://localhost:3000/articles/:id
   @Route.Get({
     path: '/:id', // as we defined a segment in the path (:id), the value entered in the url will be available as ctx.params.id
@@ -30,4 +30,5 @@ export default class RouteArticles extends Route {
     // body can contain only an object with email and password field
     this.sendCreated(ctx, body); // helper function which sets the status to 201 and return the parameter
   }
+*/
 }
