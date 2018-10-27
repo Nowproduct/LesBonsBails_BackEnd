@@ -6,7 +6,7 @@ export default class MysqlConnector {
       host     : 'localhost',
       user     : 'root',
       password : 'm }4<^6/[$os=BO',
-      database : 'lesbonsbails'
+      database : 'lesbonsbails_dev'
     });
     connection.connect();
 
