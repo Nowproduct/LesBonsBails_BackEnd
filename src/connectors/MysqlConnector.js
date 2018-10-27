@@ -1,20 +1,16 @@
-import mysql from 'mysql';
+import mysql from 'mysql2/promise';
+import config from '../../databaseConfig';
 
 export default class MysqlConnector {
-  static sendQuery(query, callback) {
-    let connection = mysql.createConnection({
-      host     : 'localhost',
-      user     : 'root',
-      password : 'm }4<^6/[$os=BO',
-      database : 'lesbonsbails_dev'
-    });
-    connection.connect();
-
-    connection.query(query, function (error, results) {
-      if (error) throw error;
-      callback(error, results);
-    });
-
-    connection.end();
+  static async sendSyncQuery(query) {
+      const connection = await mysql.createConnection(config.dev);
+  
+      const [rows, fields] = await connection.execute(query);
+  
+      connection.end();
+      return ({
+        rows,
+        fields
+      });
   }
 }
