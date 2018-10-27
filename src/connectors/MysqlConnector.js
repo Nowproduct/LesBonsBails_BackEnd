@@ -1,47 +1,13 @@
-import mariadb from 'mariadb';
+import mysql from 'mysql';
 
 export default class MysqlConnector {
-  static sendQuery(query, arrDataQuery, callback) {
-    const pool = mariadb.createPool({
-      host: 'localhost',
-      user:' root',
-      password : '',
-      database : 'lesbonsbails_dev',
-      connectionLimit: 5
+  static sendQuery(query, callback) {
+    let connection = mysql.createConnection({
+      host     : 'localhost',
+      user     : 'root',
+      password : 'm }4<^6/[$os=BO',
+      database : 'lesbonsbails_dev'
     });
-    pool.getConnection()
-    .then(conn => {
-      if (dataQuery == null) {
-        conn.query(query)
-        .then((rows) => {
-          //handle success
-          conn.end();
-          callback(undefined, rows);
-        })
-        .catch(err => {
-          //handle error
-          conn.end();
-          callback(err, undefined);
-        })
-      } else {
-        conn.query(query, arrDataQuery)
-        .then((rows) => {
-          //handle success
-          conn.end();
-          callback(undefined, rows);
-        })
-        .catch(err => {
-          //handle error
-          conn.end();
-          callback(err, undefined);
-        })
-      }
-        
-    }).catch(err => {
-      //not connected
-      callback(err, undefined);
-    });
-
     connection.connect();
 
     connection.query(query, function (error, results) {
