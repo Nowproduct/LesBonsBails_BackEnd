@@ -1,7 +1,7 @@
 import mysql from 'mysql';
 
 export default class MysqlConnector {
-  sendQuery(query, callback) {
+  static sendQuery(query, callback) {
     let connection = mysql.createConnection({
       host     : 'localhost',
       user     : 'root',
