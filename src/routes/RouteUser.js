@@ -30,14 +30,15 @@ export default class RouteUser extends Route {
   })
   async add(ctx) {
     const body = this.body(ctx); // or ctx.request.body
-    MysqlConnector.sendQuery("INSERT INTO users VALUES ( ?, ?, ?, ?, ?, ? )", [
-      body.email,
-      body.password,
-      body.username,
-      (body.firstName ? body.firstName : ""),
-      (body.lastName ? body.lastName : ""),
-      ""
-    ], (err, results) => {
+    MysqlConnector.sendQuery("INSERT INTO users "
+      + "(username, email, password, firstname, lastname, receiverpaypalid) "
+      + "VALUES ( "
+      + "'" + body.email + "',"
+      + "'" + body.password + "',"
+      + "'" + body.username + "',"
+      + "'" + (body.firstName ? body.firstName : "") + "',"
+      + "'" + (body.lastName ? body.lastName : "") + "',"
+      + " NULL);", (err, results) => {
         console.log(err);
         console.log(results);
     });
