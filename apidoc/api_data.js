@@ -1,5 +1,76 @@
 define({ "api": [
   {
+    "type": "get",
+    "url": "/articles/:id",
+    "title": "",
+    "group": "Articles",
+    "permission": [
+      {
+        "name": "public"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "C:/Users/nowpr/Projects/LesBonsBails_BackEnd/node_modules/koa-smart/dist/ApiDocTmp/articles/-id.js",
+    "groupTitle": "Articles",
+    "name": "GetArticlesId"
+  },
+  {
+    "type": "post",
+    "url": "/articles",
+    "title": "",
+    "group": "Articles",
+    "permission": [
+      {
+        "name": "public"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>It should be a string.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "type",
+            "description": "<p>It should be a string.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "description",
+            "description": "<p>It should be a string.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "price",
+            "description": "<p>It should be a string.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Array",
+            "optional": true,
+            "field": "pictureurl",
+            "description": "<p>It should be an array.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "C:/Users/nowpr/Projects/LesBonsBails_BackEnd/node_modules/koa-smart/dist/ApiDocTmp/articles.js",
+    "groupTitle": "Articles",
+    "name": "PostArticles"
+  },
+  {
     "type": "post",
     "url": "/connect",
     "title": "",
