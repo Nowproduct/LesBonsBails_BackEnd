@@ -50,6 +50,55 @@ define({ "api": [
     "name": "Get"
   },
   {
+    "type": "put",
+    "url": "/me/profile",
+    "title": "",
+    "group": "Me",
+    "permission": [
+      {
+        "name": "public"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "email",
+            "description": "<p>It should be a string with that matches with /\\S+@\\S+.\\S+/.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "username",
+            "description": "<p>It should be a string.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "firstname",
+            "description": "<p>It should be a string.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "lastname",
+            "description": "<p>It should be a string.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "C:/Users/nowpr/Projects/LesBonsBails_BackEnd/node_modules/koa-smart/dist/ApiDocTmp/me/profile.js",
+    "groupTitle": "Me",
+    "name": "PutMeProfile"
+  },
+  {
     "type": "post",
     "url": "/registration",
     "title": "",
@@ -87,14 +136,14 @@ define({ "api": [
             "group": "Parameter",
             "type": "String",
             "optional": true,
-            "field": "firstName",
+            "field": "firstname",
             "description": "<p>It should be a string.</p>"
           },
           {
             "group": "Parameter",
             "type": "String",
             "optional": true,
-            "field": "lastName",
+            "field": "lastname",
             "description": "<p>It should be a string.</p>"
           }
         ]
@@ -104,5 +153,20 @@ define({ "api": [
     "filename": "C:/Users/nowpr/Projects/LesBonsBails_BackEnd/node_modules/koa-smart/dist/ApiDocTmp/registration.js",
     "groupTitle": "Registration",
     "name": "PostRegistration"
+  },
+  {
+    "type": "get",
+    "url": "/user/:id",
+    "title": "",
+    "group": "User",
+    "permission": [
+      {
+        "name": "public"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "C:/Users/nowpr/Projects/LesBonsBails_BackEnd/node_modules/koa-smart/dist/ApiDocTmp/user/-id.js",
+    "groupTitle": "User",
+    "name": "GetUserId"
   }
 ] });

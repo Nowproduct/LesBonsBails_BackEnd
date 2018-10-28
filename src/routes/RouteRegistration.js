@@ -17,8 +17,8 @@ export default class RouteRegistration extends Route {
       email: Types.string().regex(/\S+@\S+\.\S+/).required(), // return a 400 if the body doesn't contain email key
       password: Types.string().required(), // password is required
       username: Types.string().required(), // username is required
-      firstName: Types.string(), // firstName is optional
-      lastName: Types.string(), // lastName is optional
+      firstname: Types.string(), // firstName is optional
+      lastname: Types.string(), // lastName is optional
     }),
   })
   async add(ctx) {
@@ -38,8 +38,8 @@ export default class RouteRegistration extends Route {
       console.log("Password generated: " + password);
 
       const query = "INSERT INTO users (username, email, password, firstname, lastname, receiverpaypalid) VALUES ( "
-      + "'" + body.username + "'," + "'" + body.email + "'," + "'" + password + "'," + "'" + (body.firstName ? body.firstName : "")
-      + "'," + "'" + (body.lastName ? body.lastName : "") + "'," + " NULL);";
+      + "'" + body.username + "'," + "'" + body.email + "'," + "'" + password + "'," + "'" + (body.firstname ? body.firstname : "")
+      + "'," + "'" + (body.lastname ? body.lastname : "") + "'," + " NULL);";
 
       let result = await MysqlConnector.sendSyncQuery(query);
       console.log(result);
