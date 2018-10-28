@@ -34,12 +34,10 @@ export default class RouteConnect extends Route {
       }
       else {
         const cert = fs.readFileSync('./eb8e7350-e32f-4a88-99e9-0af2a977c3f3.private.pem', 'utf8');
-        const token = jwt.sign({ userId: userExist.rows[0].id }, cert, { expiresIn: 60 * 60 * 24, algorithm: 'RS256'});
-        console.log('Token generated: ' + token);
+        const token = jwt.sign({ userId: userExist.rows[0].id }, cert, { expiresIn: 60 * 60 * 24});
 
         const saveTokenQuery = "INSERT INTO tokens (userid, token) VALUES (" + userExist.rows[0].id + ", '" + token + "');";
         const tokenSaved = await MysqlConnector.sendSyncQuery(saveTokenQuery);
-        console.log('Token saved: ', tokenSaved);
 
         this.send(ctx, 200, { token,  }, 'User successfully connected');
       }

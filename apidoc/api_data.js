@@ -104,5 +104,20 @@ define({ "api": [
     "filename": "C:/Users/nowpr/Projects/LesBonsBails_BackEnd/node_modules/koa-smart/dist/ApiDocTmp/registration.js",
     "groupTitle": "Registration",
     "name": "PostRegistration"
+  },
+  {
+    "type": "get",
+    "url": "/user/:id",
+    "title": "",
+    "group": "User",
+    "permission": [
+      {
+        "name": "public"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "C:/Users/nowpr/Projects/LesBonsBails_BackEnd/node_modules/koa-smart/dist/ApiDocTmp/user/-id.js",
+    "groupTitle": "User",
+    "name": "GetUserId"
   }
 ] });
