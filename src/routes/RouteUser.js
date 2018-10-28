@@ -18,7 +18,8 @@ export default class RouteUser extends Route {
     } else {
       const userExistQuery = "SELECT * FROM users WHERE id=" + ctx.params.id + ";";
       const getProfileResult = await MysqlConnector.sendSyncQuery(userExistQuery);
-      const userProfile = getProfileResult.rows[0];
+      let userProfile = getProfileResult.rows[0];
+      userProfile.password = "";
       if (!userProfile) {
         console.log("User " + ctx.params.id + " not found");
         this.send(ctx, 404, undefined, 'User not found');
