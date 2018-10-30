@@ -72,6 +72,41 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "/articles/recent",
+    "title": "",
+    "group": "Articles",
+    "permission": [
+      {
+        "name": "public"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "limit",
+            "description": "<p>It should be a number.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "page",
+            "description": "<p>It should be a number.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "C:/Users/nowpr/Projects/LesBonsBails_BackEnd/node_modules/koa-smart/dist/ApiDocTmp/articles/recent.js",
+    "groupTitle": "Articles",
+    "name": "PostArticlesRecent"
+  },
+  {
+    "type": "post",
     "url": "/connect",
     "title": "",
     "group": "Connect",

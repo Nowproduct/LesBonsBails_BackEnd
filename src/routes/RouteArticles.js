@@ -59,7 +59,35 @@ export default class RouteArticles extends Route {
       this.sendCreated(ctx, body); // helper function which sets the status to 201 and return the parameter
     }
   }
-/*
+
+  // get route: http://localhost:3000/articles/recent
+  @Route.Post({
+    path: '/recent', // as we defined a segment in the path (:id), the value entered in the url will be available as ctx.params.id
+    bodyType: Types.object().keys({
+      limit: Types.number().integer().required().default(10),
+      page: Types.number().integer().required().default(1),
+    }),
+  })
+  async getRecentArticle(ctx) {
+    const body = this.body(ctx);
+    const result = await GrantAccess.isConnected(ctx.request.header);
+    if (result.isAuth == false) {
+      this.send(ctx, 401, undefined, 'Invalid token');
+    } else {
+      console.log(body);
+      const itemExistQuery = "SELECT * FROM items ORDER BY publishDate DESC LIMIT " + (body.limit * (body.page - 1)) + "," + body.limit + ";";
+      const getItemResult = await MysqlConnector.sendSyncQuery(itemExistQuery);
+      let item = getItemResult.rows;
+      if (!getItemResult.rows[0]) {
+        this.send(ctx, 404, undefined, 'No articles found');
+      } else {
+        console.log(item);
+        this.send(ctx, 200, item, 'Success');
+      }
+    }
+  }
+
+  /*
   // post route: http://localhost:3000/articles
   @Route.Post({
     path: '',
