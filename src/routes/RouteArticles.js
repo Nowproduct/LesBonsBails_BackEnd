@@ -46,13 +46,13 @@ export default class RouteArticles extends Route {
   async add(ctx) {
     const body = this.body(ctx); // or ctx.request.body
     const result = await GrantAccess.isConnected(ctx.request.header);
-    const currentDateTime = new Date().toLocaleString()
+    const currentDateTime = new Date().toLocaleString('fr-FR');
     if (result.isAuth == false) {
       this.send(ctx, 401, undefined, 'Invalid token');
     } else {
       const query = "INSERT INTO items (name, type, description, price, publishDate, sellerid) VALUES ( "
       + "'" + body.name + "'," + "'" + body.type + "'," + "'" + (body.description ? body.description : "") + "'," + "'" + body.price
-      + "', " + "'" + currentDateTime + "'," + result.userId + ");";
+      + "', " + "NOW() ," + result.userId + ");";
       const createItemResult = await MysqlConnector.sendSyncQuery(query);
       console.log(createItemResult);
     // body can contain only an object with email and password field
