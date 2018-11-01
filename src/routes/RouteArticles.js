@@ -75,7 +75,7 @@ export default class RouteArticles extends Route {
       this.send(ctx, 401, undefined, 'Invalid token');
     } else {
       console.log(body);
-      const itemExistQuery = "SELECT * FROM items ORDER BY publishDate DESC LIMIT " + (body.limit * (body.page - 1)) + "," + body.limit + ";";
+      const itemExistQuery = "SELECT * FROM items WHERE state != 0 ORDER BY publishDate DESC LIMIT " + (body.limit * (body.page - 1)) + "," + body.limit + ";";
       const getItemResult = await MysqlConnector.sendSyncQuery(itemExistQuery);
       let item = getItemResult.rows;
       if (!getItemResult.rows[0]) {
@@ -116,12 +116,12 @@ export default class RouteArticles extends Route {
 
       const itemExistQuery = "SELECT * FROM items"
         + (keywordsParsed == "" ? "" : (
-          " WHERE ( name LIKE "
+          " WHERE state != 0 AND ( name LIKE "
           + "\"" + keywordsParsed + "\""
           + " OR description LIKE "
           + "\"" + keywordsParsed + "\")" ))
-        + (body.type ? (keywordsParsed == "" ? " WHERE type=\"" + body.type + "\"" : " AND type=\"" + body.type + "\"") : "")
-        + " ORDER BY publishDate DESC LIMIT "
+        + (body.type ? (keywordsParsed == "" ? " WHERE state != 0 AND type=\"" + body.type + "\"" : " AND type=\"" + body.type + "\"") : "")
+        + (keywordsParsed == "" || !body.type ? " WHERE state != 0" : "") + " ORDER BY publishDate DESC LIMIT "
         + (body.limit * (body.page - 1)) + "," + body.limit + ";";
 
       console.log(itemExistQuery);
@@ -136,37 +136,53 @@ export default class RouteArticles extends Route {
     }
   }
 
+  // put route: http://localhost:3000/articles/:id
+  @Route.Put({
+    path: '/:id',
+    bodyType: Types.object().keys({
+      // params to allow: all other params will be rejected
+      name: Types.string(), // password is optional
+      type: Types.string(), // password is optional
+      description: Types.string(), // password is optional
+      price: Types.number().integer(), // password is optional
+    }),
+  })
+  async editArticle(ctx) {
+    const body = this.body(ctx); // or ctx.request.body
+    const result = await GrantAccess.isConnected(ctx.request.header);
+    if (result.isAuth == false) {
+      this.send(ctx, 401, undefined, 'Invalid token');
+    } else {
+      const editArticleQuery = "UPDATE items SET "
+      + (body.name ? "name = '" + body.name + ((body.type || body.description || body.price) ? "', " : "'") : "")
+      + (body.type ? "type = '" + body.type + "', " : "")
+      + (body.description ? "description = '" + body.description + "', " : "")
+      + (body.price ? "price = '" + body.price + "'," : "")
+      + " publishDate = NOW(), edited = 1 WHERE id=" + ctx.params.id + ";";
+      console.log("Mysql query: " + editArticleQuery);
+      const editArticleResult = await MysqlConnector.sendSyncQuery(editArticleQuery);
+      console.log(editArticleResult);
+      this.send(ctx, 200, undefined, 'Success');
+    }
+  }
+
+  // post route: http://localhost:3000/articles
+  @Route.Delete({
+    path: '/:id',
+  })
+  async add(ctx) {
+    const result = await GrantAccess.isConnected(ctx.request.header);
+    if (result.isAuth == false) {
+      this.send(ctx, 401, undefined, 'Invalid token');
+    } else {
+      const query = "UPDATE items SET state = 0 WHERE id=" + ctx.params.id + ";";
+      const cancelArticleResult = await MysqlConnector.sendSyncQuery(query);
+      console.log(cancelArticleResult);
+      this.send(ctx, 200, undefined, 'Success');
+    }
+  }
+
   /*
-  // post route: http://localhost:3000/articles
-  @Route.Post({
-    path: '/search',
-    bodyType: Types.object().keys({
-      // params to allow: all other params will be rejected
-      email: Types.string().required(), // return a 400 if the body doesn't contain email key
-      password: Types.string(), // password is optional
-    }),
-  })
-  async add(ctx) {
-    const body = this.body(ctx); // or ctx.request.body
-    // body can contain only an object with email and password field
-    this.sendCreated(ctx, body); // helper function which sets the status to 201 and return the parameter
-  }
-
-  // post route: http://localhost:3000/articles
-  @Route.Post({
-    path: '',
-    bodyType: Types.object().keys({
-      // params to allow: all other params will be rejected
-      email: Types.string().required(), // return a 400 if the body doesn't contain email key
-      password: Types.string(), // password is optional
-    }),
-  })
-  async add(ctx) {
-    const body = this.body(ctx); // or ctx.request.body
-    // body can contain only an object with email and password field
-    this.sendCreated(ctx, body); // helper function which sets the status to 201 and return the parameter
-  }
-
   // post route: http://localhost:3000/articles
   @Route.Post({
     path: '',

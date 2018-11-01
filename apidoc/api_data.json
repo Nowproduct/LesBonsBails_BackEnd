@@ -1,20 +1,5 @@
 [
   {
-    "type": "get",
-    "url": "/articles/:id",
-    "title": "",
-    "group": "Articles",
-    "permission": [
-      {
-        "name": "public"
-      }
-    ],
-    "version": "0.0.0",
-    "filename": "C:/Users/nowpr/Projects/LesBonsBails_BackEnd/node_modules/koa-smart/dist/ApiDocTmp/articles/-id.js",
-    "groupTitle": "Articles",
-    "name": "GetArticlesId"
-  },
-  {
     "type": "post",
     "url": "/articles",
     "title": "",
@@ -153,6 +138,55 @@
     "filename": "C:/Users/nowpr/Projects/LesBonsBails_BackEnd/node_modules/koa-smart/dist/ApiDocTmp/articles/search.js",
     "groupTitle": "Articles",
     "name": "PostArticlesSearch"
+  },
+  {
+    "type": "put",
+    "url": "/articles/:id",
+    "title": "",
+    "group": "Articles",
+    "permission": [
+      {
+        "name": "public"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "name",
+            "description": "<p>It should be a string.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "type",
+            "description": "<p>It should be a string.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "description",
+            "description": "<p>It should be a string.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": true,
+            "field": "price",
+            "description": "<p>It should be a number.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "C:/Users/nowpr/Projects/LesBonsBails_BackEnd/node_modules/koa-smart/dist/ApiDocTmp/articles/-id.js",
+    "groupTitle": "Articles",
+    "name": "PutArticlesId"
   },
   {
     "type": "post",
